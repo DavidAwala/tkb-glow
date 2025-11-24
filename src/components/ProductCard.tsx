@@ -1,54 +1,56 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
 interface ProductCardProps {
   id: string;
   name: string;
   price: number;
   image: string;
+  benefit: string;
   onAddToCart: () => void;
-  onViewDetails: () => void;
 }
 
 export const ProductCard = ({
+  id,
   name,
   price,
   image,
+  benefit,
   onAddToCart,
-  onViewDetails,
 }: ProductCardProps) => {
+  const navigate = useNavigate();
+
   return (
-    <Card className="group overflow-hidden border-border/40 hover:border-border transition-all duration-300 hover:shadow-lg">
+    <Card className="group overflow-hidden border-border hover:shadow-lg transition-shadow cursor-pointer">
       <div 
-        className="relative aspect-square overflow-hidden bg-muted cursor-pointer"
-        onClick={onViewDetails}
+        className="aspect-square overflow-hidden bg-muted"
+        onClick={() => navigate(`/product/${id}`)}
       >
         <img
           src={image}
           alt={name}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform group-hover:scale-105"
         />
       </div>
-      <div className="p-3 space-y-2">
-        <h3 className="font-medium text-sm text-foreground line-clamp-1">{name}</h3>
-        <div className="flex items-center justify-between gap-2">
-          <span className="text-base font-semibold text-primary">₦{price.toLocaleString()}</span>
+      <div className="p-4 space-y-3">
+        <div onClick={() => navigate(`/product/${id}`)}>
+          <h3 className="font-medium text-sm mb-1 text-foreground">{name}</h3>
+          <p className="text-xs text-muted-foreground">{benefit}</p>
+        </div>
+        <div className="flex items-center justify-between">
+          <span className="font-semibold text-primary">₦{price.toLocaleString()}</span>
           <Button
             size="sm"
-            onClick={onAddToCart}
-            className="bg-accent hover:bg-accent/90 text-accent-foreground h-8 gap-1"
+            className="bg-gold hover:bg-gold/90 text-accent-foreground h-8"
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart();
+            }}
           >
-            <ShoppingCart className="h-3.5 w-3.5" />
-            <span className="text-xs font-semibold">Add</span>
+            Add to cart
           </Button>
         </div>
-        <button
-          onClick={onViewDetails}
-          className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-        >
-          Details →
-        </button>
       </div>
     </Card>
   );
