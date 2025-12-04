@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./loader.css";
+import "./Loader.css";
 
 const Loader = ({ onComplete }) => {
   const [stage, setStage] = useState(0);
