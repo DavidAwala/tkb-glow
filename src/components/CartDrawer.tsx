@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -31,6 +33,20 @@ export const CartDrawer = ({
   onRemoveItem,
 }: CartDrawerProps) => {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const handlePurchase = () => {
+    // if not signed in, redirect to auth then back
+    if (!user) {
+      // You can set a redirect param so they return after login
+      navigate(`/auth?next=/delivery`);
+      onClose();
+      return;
+    }
+    onClose();
+    navigate('/delivery'); // delivery page checks/validates address then pushes to /checkout/payment
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
@@ -116,12 +132,16 @@ export const CartDrawer = ({
                 ₦{total.toLocaleString()}
               </span>
             </div>
+
+            {/* PURCHASE button starts the delivery -> payment flow */}
             <Button
               className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
               size="lg"
+              onClick={handlePurchase}
             >
-              Checkout with PayPal
+              Purchase
             </Button>
+
             <Button
               variant="ghost"
               className="w-full mt-2"

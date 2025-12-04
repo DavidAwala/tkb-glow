@@ -1,0 +1,53 @@
+.loader-container {
+  position: fixed;
+  inset: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* White-background logo */
+.logo-bg {
+  width: 180px;
+  opacity: 1;
+  transition: all 1.2s ease;
+}
+
+/* Glow Pulse */
+.logo-bg.glow {
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+}
+
+/* Transparent SVG version */
+.logo-transparent {
+  position: absolute;
+  width: 0px;
+  opacity: 0;
+  transition: all 1.2s ease;
+}
+
+/* SCALE FROM LOGO CENTER INTO HOME PAGE */
+.logo-transparent.zoom-in {
+  width: 4500px;
+  opacity: 1;
+  transform: scale(8);
+}
+
+/* Shine line */
+.shine {
+  position: absolute;
+  width: 80px;
+  height: 350px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  transform: rotate(25deg) translateX(-500px);
+  opacity: 0;
+  transition: 1.2s ease;
+}
+
+.shine.active {
+  opacity: 1;
+  transform: rotate(25deg) translateX(500px);
+}

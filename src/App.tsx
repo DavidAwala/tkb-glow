@@ -9,6 +9,16 @@ import Auth from "./pages/Auth";
 import Product from "./pages/Product";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import Delivery from "./pages/Delivery";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutPayment from "./pages/CheckoutPayment";
+import CustomerDetail from "./pages/CustomerDetail";
+import RevenueAnalytics from "./pages/RevenueAnalytics";
+import Order from "./pages/Order";
+import About from "./pages/About";
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
+import AccountOrders from "./pages/AccountOrders";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +34,16 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/customer/:userId" element={<CustomerDetail />} />
+            <Route path="/admin/revenue" element={<RevenueAnalytics />} />
+            <Route path="/delivery" element={<Delivery />} />
+            <Route path="/order/:id" element={<Order />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/account/orders" element={<AccountOrders />} />
+            <Route path="/checkout/payment" element={<CheckoutPayment />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </TooltipProvider>

@@ -1,0 +1,17 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gold Circle -->
+  <circle cx="150" cy="150" r="110" fill="#C8922C" />
+
+  <!-- Letters -->
+  <text x="95" y="160" font-family="Georgia, serif" font-size="140" fill="white" font-style="italic">
+    T
+  </text>
+
+  <text x="185" y="140" font-family="Georgia, serif" font-size="90" fill="white" font-style="italic">
+    b
+  </text>
+
+  <text x="155" y="140" font-family="Georgia, serif" font-size="70" fill="white" font-style="italic">
+    k
+  </text>
+</svg>

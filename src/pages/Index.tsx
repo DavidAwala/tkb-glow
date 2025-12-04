@@ -3,10 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/Header";
+import Hero from "@/components/Hero";
+import Footer from "@/components/footer";
+import NewsletterForm from "@/components/NewsletterForm";
 import { ProductCard } from "@/components/ProductCard";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import Loader from "@/components/Loader"; 
 
 interface CartItem {
   id: string;
@@ -20,6 +24,7 @@ const Index = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+   const [loading, setLoading] = useState(true);
   const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -59,6 +64,11 @@ const Index = () => {
     return () => window.removeEventListener('cartUpdate', handleCartUpdate);
   }, []);
 
+
+
+
+
+
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -95,34 +105,30 @@ const Index = () => {
 
   const cartItemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
+
+
+
+
+
+
+
   return (
+    <>
+     {loading && <Loader onComplete={() => setLoading(false)} />}
+
+      {!loading && (
     <div className="min-h-screen bg-background">
       <Header 
         cartItemCount={cartItemCount} 
         onCartClick={() => setIsCartOpen(true)}
         isAdmin={isAdmin}
       />
-      
+    
       {/* Mini Hero */}
-      <section className="container mx-auto px-4 pt-24 pb-8">
+      <section className="container mx-auto px-4 pt-10 pb-8">
+          <Hero />
         <div className="text-center max-w-2xl mx-auto">
-          <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden">
-            <img 
-              src="https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?w=800" 
-              alt="Product"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <p className="text-lg text-muted-foreground mb-4">Glow daily. Feel aligned.</p>
-          <div className="flex gap-3 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-gold hover:bg-gold/90 text-accent-foreground"
-              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Shop Bestsellers
-            </Button>
-            {!user && (
+    {!user && (
               <Button 
                 size="lg" 
                 variant="outline"
@@ -132,7 +138,6 @@ const Index = () => {
               </Button>
             )}
           </div>
-        </div>
       </section>
 
       {/* Category Tabs */}
@@ -191,7 +196,12 @@ const Index = () => {
         onUpdateQuantity={updateQuantity}
         onRemoveItem={removeItem}
       />
+
+    <Footer />
     </div>
+ )}
+    </>
+ 
   );
 };
 
